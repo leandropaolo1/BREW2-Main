@@ -1,0 +1,65 @@
+{% extends "brewwerblog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+
+	<div class="col px-2 my-3">
+		<div class="container">
+			<div class="">
+				<div class="row  ">
+
+					<div class="col d-flex justify-content-center">
+						<div class="row">
+							<a href="{% url 'brewwer-home' %}" class="btn button-border-orange_2 fw500 text-black my-4" role="button" aria-disabled="true">
+		  
+							  <div class="d-flex align-content-center">
+								<div class="d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="lime" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                      </svg>
+								</div>
+			
+								<span class="h3 mb-0 text-white mx-3" style="font-weight:200">Create Brew</span>
+							  </div>
+							  </a>
+						  </div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+<div class="container  mb-5">
+    <div class="container p-0 mb-5">
+        <head>
+            {{ form.media}}
+        
+        </head>
+            <div class="col">
+        
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Brewwer Post</legend>
+                        {{ form|crispy }}
+                        {{ form.media }}
+        
+                    </fieldset>
+                    <div class="form-group mt-3">
+                        <button class="btn btn-outline-info btn-block" type="submit">Post</button>
+                    </div>
+                </form>
+                    
+            </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}
+

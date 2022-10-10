@@ -1,0 +1,285 @@
+{% extends "brewwerblog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+
+<style>
+	a{
+		text-decoration: none;
+	}
+</style>
+<div class="row ">
+
+	<div class="col px-0 my-3">
+		<div class="container">
+			<div class="">
+				<div class="row  ">
+
+					<div class="col d-flex justify-content-center">
+						<div class="row">
+							<a href="{% url 'pots-view-all' %}" class="btn button-border-orange_2 fw500 text-black my-4" role="button" aria-disabled="true">
+		  
+							  <div class="d-flex align-content-center">
+								<div class="d-flex align-items-center">
+								  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-grid" viewBox="0 0 16 16">
+									<path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+								  </svg>
+								</div>
+			
+								<span class="h3 mb-0 text-white mx-3" style="font-weight:200">All Pots</span>
+							  </div>
+							  </a>
+						  </div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+{% if page_obj %}
+<div class="col  infinite-container ">
+	<div class="mt-3 ">
+		{% for friend in page_obj %}
+		<div class="BlueOutlineCss2 infinite-item ">
+			<div class="row justify-content-center my-4">
+				<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-flex align-items-center justify-content-center">
+					<a href="{% url 'show_pot_page' pot_id=friend.id %}">
+						<div class="card-image">
+							<img class="rounded-circle account-img" src="{{friend.image.url}}" alt="">
+						</div>
+					</a>
+				</div>
+				<div class="col ">
+					<a class="" href="{% url 'show_pot_page' pot_id=friend.id %}">
+
+						<h1 class="account-heading" style="font-weight:200;color:lime">{{friend.pot_name}}</h1>
+
+					</a>
+					<p class=" mb-3">
+						{{friend.profile_description}}
+
+					</p>
+					<div class="row m-0 mt-3 pt-3 LineTop">
+						<div class="col p-0">
+							<h3 class="mr-5">
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue"
+									class="m-0 bi bi-person" viewBox="0 0 16 16">
+									<path
+										d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+								</svg>{{ friend.member_count }}</h3>
+						</div>
+						<div class="col p-0">
+							<h3 class="mr-5">
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="orange"
+									class="bi bi-layers" viewBox="0 0 16 16">
+									<path
+										d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0l3.515-1.874zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z" />
+								</svg>
+								{{ friend.postcount }}
+							</h3>
+						</div>
+						<div class="col p-0">
+							<h3>
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow"
+									class="bi bi-eye" viewBox="0 0 16 16">
+									<path
+										d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+									<path
+										d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+								</svg>
+								{{ friend.count_views }}
+							</h3>
+						</div>
+						<div class="col p-0">
+							<a href="{% url 'pot-category' friend.category %}"><button
+								class="ml-4 btn btn-Category btn-sm cmt_btn mx-1 my-1">{{friend.category}}</button></a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% endfor %}
+	</div>
+
+</div>
+
+{% else %}
+<!-- If no friends -->
+<div class="container">
+	<div class="content-section">
+		<div class="row justify-content-center">
+			<h1 class="account-heading">
+				Something went wrong
+			</h1>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="col">
+	<div class="content-section"></div>
+</div>
+
+{%if page_obj.has_next %}
+<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+<!--<a class= "btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>-->
+{%endif%}
+
+<script src="{% static 'brewwerblog/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'brewwerblog/infinite.min.js' %}"></script>
+
+
+<script src="{% static 'brewwerblog/jquery-3.6.0.min.js' %}"></script>
+<script>
+	$(document).ready(function () {
+		var infinite = new Waypoint.Infinite({
+			element: $('.infinite-container')[0],
+
+			offset: 'bottom-in-view',
+			onBeforePageLoad: function () {
+
+			},
+			onAfterPageLoad: function () {
+
+			}
+
+		})
+	});
+</script>
+
+{% endblock content %}
+
+{% block side %}
+{% load static %}
+{%if user.is_authenticated%}
+<div class="row ">
+	<div class="col d-flex justify-content-start py-2 my-2 ">
+		<div class="">
+			<div class="justify-content-center pt-1 pb-2">
+				<form id="createpotform">
+					{% csrf_token %}
+					<fieldset class="form-group">
+						<legend class=" mb-2 text-start pb-3" style="font-weight:200">Create New Pot</legend>
+						{{ form|crispy }}
+					</fieldset>
+					<div class="dropdown mr-2 mt-2">
+						<button class="btn btn-Category dropdown-toggle" type="button" id="dropdownMenuButton1"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+								class="bi bi-people" viewBox="0 0 16 16">
+								<path
+									d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+							</svg> Friends
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							{%for friend in friends%}
+							<input type="checkbox" value="{{friend}}" class="friendschecked">{{friend}}<br />
+							{%endfor%}
+
+						</div>
+
+					</div>
+					<div class="form-group">
+						<button class="mt-3 btn btn-Category btn-block " type="submit">Create</button>
+					</div>
+				</form>
+
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+{%endif%}
+
+
+<script>
+	$(document).ready(function () {
+
+		/*
+		    On submiting the form, send the POST ajax
+		    request to server and after successfull submission
+		    display the object.
+		*/
+		$("#createpotform").submit(function (e) {
+			var _friends_choosen = ""
+
+			$(".friendschecked:checked").each(function () {
+				_friends_choosen += $(this).val() + "::";
+			})
+			var _friends_choosenArr = _friends_choosen.split('::');
+			// preventing from page reload and default actions
+			e.preventDefault();
+			// serialize the data for sending the form data.
+			var serializedData = $(this).serialize();
+			// make POST ajax call
+			$.ajax({
+				type: 'POST',
+				url: "{% url 'create_pot_ajax' %}",
+				data: serializedData,
+
+				success: function (response) {
+					var instance_pot = JSON.parse(response["potcreated"]);
+					console.log(instance_pot[0]["pk"]);
+					var pk_val = instance_pot[0]["pk"]
+					console.log(pk_val)
+					// on successfull creating object
+					// 1. clear the form.
+					if (!(_friends_choosen === "")) {
+						$.ajax({
+							url: "{% url 'add_member_pot' %}",
+							type: "POST",
+							data: {
+								instance_pot: pk_val,
+
+								friendschoosen: _friends_choosen,
+
+								csrfmiddlewaretoken: "{{csrf_token}}"
+							},
+							dataType: 'json',
+							beforeSend: function () {},
+							success: function (res) {
+								console.log(_friends_choosenArr);
+
+								location.href = "{%url 'my-pots' %}"
+							}
+						});
+					}
+
+
+					$("#createpotform").trigger('reset');
+
+
+					// 2. focus to nickname input 
+				},
+				error: function (response) {
+					// alert the error if any error occured
+					alert(response["responseJSON"]["error"]);
+				}
+			})
+
+
+		})
+
+	})
+</script>
+
+{%endblock side%}

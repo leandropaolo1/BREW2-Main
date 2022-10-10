@@ -1,0 +1,56 @@
+{% extends "brewwerblog/base.html" %}
+{% block content %}
+{% load static %}
+
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ view.kwargs.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ view.kwargs.username }}</h2>
+        </div>
+      </div>
+    <div class="col infinite-container">
+
+    {% for post in posts %}
+    <article class="media content-section infinite-item">
+      <img class= "rounded-circle article-img" src="{{ post.author.profile.image.url}}">
+        <!-- FORM HERE -->
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'show_profile_page' post.id %}">{{ post.author }}</a>
+            <small class="text-muted">{{ post.data_posted }}</small>
+            
+          </div>
+
+          <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.snippet }}</p>
+        </div>
+        <div class="col">
+          {% if post.header_image%}
+            <img src="{{ post.header_image.url }}" class="img-fluid rounded">
+          {%endif%}
+      </div>
+      </article>
+    {% endfor %}
+    </div>  
+    {%if page_obj.has_next %}
+    <a class= "infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+    <!--<a class= "btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>-->
+      {%endif%}
+  <script src="{% static 'brewwerblog/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'brewwerblog/infinite.min.js' %}"></script>
+
+  <script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+
+        offset: 'bottom-in-view',
+        onBeforePageLoad: function(){
+
+        },
+        onAfterPageLoad:function(){
+
+        }
+
+    })
+  </script>
+{% endblock content %}

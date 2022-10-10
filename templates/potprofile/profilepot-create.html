@@ -1,0 +1,158 @@
+{% extends "brewwerblog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{%if user.is_authenticated%}
+<div  class="container">
+	<div class="content-section yourpots">
+	  <div class="row justify-content-center "> 
+		<div class="col">
+			<div class="row justify-content-end">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="Aquamarine" class="bi bi-cup-straw" viewBox="0 0 16 16">
+                    <path d="M13.902.334a.5.5 0 0 1-.28.65l-2.254.902-.4 1.927c.376.095.715.215.972.367.228.135.56.396.56.82 0 .046-.004.09-.011.132l-.962 9.068a1.28 1.28 0 0 1-.524.93c-.488.34-1.494.87-3.01.87-1.516 0-2.522-.53-3.01-.87a1.28 1.28 0 0 1-.524-.93L3.51 5.132A.78.78 0 0 1 3.5 5c0-.424.332-.685.56-.82.262-.154.607-.276.99-.372C5.824 3.614 6.867 3.5 8 3.5c.712 0 1.389.045 1.985.127l.464-2.215a.5.5 0 0 1 .303-.356l2.5-1a.5.5 0 0 1 .65.278zM9.768 4.607A13.991 13.991 0 0 0 8 4.5c-1.076 0-2.033.11-2.707.278A3.284 3.284 0 0 0 4.645 5c.146.073.362.15.648.222C5.967 5.39 6.924 5.5 8 5.5c.571 0 1.109-.03 1.588-.085l.18-.808zm.292 1.756C9.445 6.45 8.742 6.5 8 6.5c-1.133 0-2.176-.114-2.95-.308a5.514 5.514 0 0 1-.435-.127l.838 8.03c.013.121.06.186.102.215.357.249 1.168.69 2.438.69 1.27 0 2.081-.441 2.438-.69.042-.029.09-.094.102-.215l.852-8.03a5.517 5.517 0 0 1-.435.127 8.88 8.88 0 0 1-.89.17zM4.467 4.884s.003.002.005.006l-.005-.006zm7.066 0-.005.006c.002-.004.005-.006.005-.006zM11.354 5a3.174 3.174 0 0 0-.604-.21l-.099.445.055-.013c.286-.072.502-.149.648-.222z"/>
+                  </svg>
+			</div>				
+		</div>
+		<div class="col">
+			<div class="row">
+				<h1 >Create <br/>Pot</h1>
+
+			</div>
+
+		</div>
+  
+	</div>
+	</div>
+  
+  </div>
+	<div class="row ">
+		<div class="col d-flex justify-content-center py-2 my-2 ">
+			<div class="content-section3">
+				<div class="justify-content-center pt-1 pb-2">
+                    <form id="createpotform">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4 text-center pb-3">
+                            </legend>
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div class="dropdown mr-2 mt-2">
+                            <button class="btn btn-Category dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                  </svg> Friends
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {%for friend in friends%}
+                                    <input type="checkbox" value="{{friend}}" class="friendschecked">{{friend}}<br/>
+                                {%endfor%}
+    
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <button class="mt-3 btn btn-Category btn-block " type="submit">Create</button>
+                        </div>
+                    </form>
+ 
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col ">
+        <div class="d-flex flex-row-reverse">
+          <button type="button" class="btn btn-info pt-1 pb-0" value="Previous Page" onClick="window.history.back();return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            
+          </button>
+
+        </div>
+        
+
+      </div>
+
+    </div>
+  </div>
+
+{%endif%}
+
+	
+<script>
+    $(document).ready(function(){
+
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#createpotform").submit(function (e) {
+        var _friends_choosen=""
+
+        $(".friendschecked:checked").each(function(){
+            _friends_choosen+=$(this).val()+"::";
+        })
+        var _friends_choosenArr=_friends_choosen.split('::');
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'create_pot_ajax' %}",
+            data: serializedData,
+            
+            success: function (response) {
+                var instance_pot = JSON.parse(response["potcreated"]);
+                console.log(instance_pot[0]["pk"]);
+                var pk_val=instance_pot[0]["pk"]
+                console.log(pk_val)
+                // on successfull creating object
+                // 1. clear the form.
+                if(!(_friends_choosen==="")){
+                    $.ajax({
+                    url:"{% url 'add_member_pot' %}",
+                    type:"POST",
+                    data:{
+                    instance_pot:pk_val,
+
+                    friendschoosen:_friends_choosen,
+
+                    csrfmiddlewaretoken:"{{csrf_token}}"
+                    },
+                    dataType:'json',
+                    beforeSend:function(){
+                    },
+                    success:function(res){
+                        console.log(_friends_choosenArr);
+
+                        location.href = "{%url 'my-pots' %}"
+                    }
+                });
+                }
+
+            
+                $("#createpotform").trigger('reset');
+
+ 
+                // 2. focus to nickname input 
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+
+
+    })
+
+})
+</script>
+{% endblock content %}
+

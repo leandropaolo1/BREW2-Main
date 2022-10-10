@@ -1,0 +1,196 @@
+{% extends 'brewwerblog/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+	.profile-image{
+		max-height: 100px;
+		max-width: 100px;
+	}
+	.profile-image{
+		border-radius: 12px;
+	}
+	.card{
+		border-radius: 12px;
+	}
+	.friends-text{
+		color: #000;
+		font-weight: 500;
+	}
+	.friends-text-container{
+		border: 1px solid #cccccc;
+		border-radius: 12px;
+	}
+	.friends-btn:hover {
+		background-color: #bfbfbf;
+		border-color: #bfbfbf;
+	}
+	.dropdown-toggle::after { 
+		content: none; 
+	}
+	.profile-link{
+		color: #000;
+	}
+	.checkmark-icon{
+		color: green;
+	}
+	.cancel-icon{
+		color: red;
+	}
+	
+</style>
+
+
+
+{% if members %}
+<div  class="container">
+	<div class="content-section BlueOutlineCss2">
+	  <div class="row justify-content-center "> 
+		<div class="col">
+			<div class="row justify-content-end">
+				<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="Cyan" class="bi bi-people" viewBox="0 0 16 16">
+					<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+				  </svg>
+			</div>				
+		</div>
+		<div class="col">
+			<div class="row">
+				<small >mem</small>
+
+			</div>
+			<div class="row">
+				<small >bers</small>
+
+			</div>
+		</div>
+  
+	</div>
+	</div>
+  
+  </div>
+	{% for friend in members %}
+
+		<div class="container hidden-mobile">
+			<div class="content-section">
+				<div class="row justify-content-center">
+					<div class="col-4">
+						<a href="{% url 'show_profile_page' user_id=friend.0.pk %}">
+							<div class="card-image m-2">
+								<img class="rounded-circle account-img" src="{{friend.0.profile.image.url}}" alt="">
+							</div>
+						</a>
+					</div>
+					<div class="col">
+						<a class="ml-3" href="{% url 'show_profile_page' user_id=friend.0.pk %}">
+							<h1 class="account-heading">{{friend.0}}</h1>
+						</a>
+						<h1 class="pl-2 mb-3">
+							{{friend.0.profile.profile_description}}
+						</h1>
+
+						<div class="row m-0 mt-3 pt-3 LineTop">
+							</div>
+					</div>
+					<div class="col justify-content-center">
+						<div class="dropdown pt-4 m-auto">
+						  <button class="btn cancel-friend-req btn-block dropdown-toggle " type="button" id="id_friends_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
+								<path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+								<path fill-rule="evenodd" d="M12.146 5.146a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+							  </svg>
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="id_friends_toggle">
+							<a class="dropdown-item" href="#" onclick="removeMember('{{friend.0.id}}','{{pot_id}}', onMemberRemoved)">Remove Member</a>
+						  </div>
+						</div>
+					  </div>
+				</div>
+			</div>
+		</div>
+		<div class="container mobile-only">
+			<div class="content-section">
+				<div class="row ">
+					<div class="col">
+						<div class="d-flex flex-row justify-content-center">
+							<a href="{% url 'show_profile_page' user_id=friend.0.pk %}">
+								<img class="rounded-circle account-img" src="{{friend.0.profile.image.url}}" alt="">
+							</a>
+
+						</div>
+
+					</div>
+					<div class="col">
+						<div class="d-flex flex-row justify-content-center">
+
+						<a class="ml-3" href="{% url 'show_profile_page' user_id=friend.0.pk %}">
+							<h1 class="account-heading">{{friend.0}}</h1>
+						</a>
+						</div>
+						<div class="d-flex flex-row justify-content-center">
+							<h3 class="pl-2 mb-3"><br/>{{friend.0.profile.profile_description}}<br/> </h3>
+						</div>
+						<div class="row m-0 mt-3 LineTop">
+							<div class="col">
+								<div class="dropdown pt-4 m-auto">
+									<button class="btn cancel-friend-req btn-block dropdown-toggle " type="button" id="id_friends_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
+										  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+										  <path fill-rule="evenodd" d="M12.146 5.146a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+										</svg>
+									</button>
+									<div class="dropdown-menu" aria-labelledby="id_friends_toggle">
+									  <a class="dropdown-item" href="#" onclick="removeMember('{{friend.0.id}}','{{pot_id}}', onMemberRemoved)">Remove Member</a>
+									</div>
+								  </div>
+							</div>
+
+							</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	{% else %} <!-- If no friends -->
+	<div class="container">
+		<div class="content-section">
+			<div class="row justify-content-center">
+				<h1 class="account-heading">
+					You have no Connections
+				</h1>
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+<script type="text/javascript">
+
+	// called from base_js.html
+	//preloadImage("{{profile_image|safe}}", 'id_profile_image')
+	
+
+	
+
+	
+	function onMemberRemoved(){
+    location.reload();
+	}
+	
+
+	var removeMemberBtn = document.getElementById("id_unmember_btn")
+  if (removeMemberBtn != null){
+    removeMemberBtn.addEventListener("click", function(){
+      removeMember("{{friend.0.id}}","{{pot_id}}", onMemberRemoved)
+
+    })
+  }
+	
+	
+	</script>
+	
+	{% include 'brewwerchannels/snippets/remove_member.html' %}
+	
+
+{% endblock content %}

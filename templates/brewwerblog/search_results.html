@@ -1,0 +1,199 @@
+{% extends "brewwerblog/base.html" %}
+{% block content %}
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>
+<div class="row">
+
+  <div class="col  my-3">
+    <div class="container">
+      <div class=" yourpots">
+        <div class="row  ">
+
+          <div class="col d-flex justify-content-center">
+            <div class="row">
+              <a href="{% url 'brewwer-home' %}" class="btn button-border-orange_2 fw500 text-black my-4" role="button"
+                aria-disabled="true">
+
+                <div class="d-flex align-content-center">
+                  <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="Aquamarine"
+                      class="bi bi-search" viewBox="0 0 16 16">
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                  </div>
+
+                  <span class="h3 mb-0 text-white mx-3" style="font-weight:200">Search Results</span>
+                </div>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% if user.is_authenticated %}
+{%if all_search_results %}
+
+{% for result in all_search_results %}
+
+<div class="container ">
+  <div class="content-section">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-12 col-md-4 col-xl-4 col-lg-4 d-flex justify-content-center">
+        <a href="{% url 'show_profile_page' result.id %}">
+          <img class="rounded-circle account-img" src="{{ result.profile.image.url }}">
+        </a>
+
+      </div>
+      <div class="col">
+        <a href="{% url 'show_profile_page' result.id %}">
+          <h2 class="" style="font-weight:200;color: aqua;">@{{ result.username }}</h2>
+        </a>
+        <h5 class="pl-2 mb-3">{{ result.profile.profile_description }}</h5>
+        <div class="row m-0 mt-3 pt-3 LineTop">
+          <div class="d-inline-flex p-2 bd-highlight ">
+            <a href="{% url 'show_profile_page' result.id %}">
+              <p class="text-white">View Profile</p>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- FORM HERE -->
+</div>
+
+{%endfor%}
+{%else%}
+<div class="container">
+  <div class="content-section">
+    <div class=" justify-content-center">
+      <h1 class="text-center">No results</h1>
+    </div>
+  </div>
+</div>
+{%endif%}
+{%else %}
+<div class="container">
+  <div class=" col justify-content-center align-self-center ">
+    <div class=" justify-content-center">
+      <a href="{% url 'brewwer-login'%}">
+        <button class="btn btn-outline-info btn-block">
+          <h1 class="account-heading">Login to continue</h1>
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+{%endif%}
+<div class="row ">
+
+	<div class="col my-3">
+		<div class="container">
+			<div class=" yourpots">
+				<div class="row  ">
+
+					<div class="col d-flex justify-content-center">
+						<div class="row">
+							<a href="{% url 'pots-view-all' %}" class="btn button-border-orange_2 fw500 text-black my-4" role="button" aria-disabled="true">
+		  
+							  <div class="d-flex align-content-center">
+								<div class="d-flex align-items-center">
+								  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-grid" viewBox="0 0 16 16">
+									<path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+								  </svg>
+								</div>
+			
+								<span class="h3 mb-0 text-white mx-3" style="font-weight:200">All Pots</span>
+							  </div>
+							  </a>
+						  </div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+  {% for friend in all_search_results_pot %}
+  <div class="container">
+    <div class="content-section">
+      <div class="row justify-content-center">
+        <div class="ol-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-flex align-items-center justify-content-center">
+          <a href="{% url 'show_pot_page' pot_id=friend.id %}">
+            <div class="card-image m-2">
+              <img class="rounded-circle account-img" src="{{friend.image.url}}" alt="">
+            </div>
+          </a>
+        </div>
+        <div class="col">
+          <a class="ml-3" href="{% url 'show_pot_page' pot_id=friend.id %}">
+            <h2 class="" style="font-weight:200;color:lime">{{friend.pot_name}}</h2>
+          </a>
+          <h5 class=" mb-3">
+            {{friend.profile_description}}
+          </h5>
+					<div class="row m-0 mt-3 pt-3 LineTop">
+						<div class="col p-0">
+							<h3 class="mr-5">
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue"
+									class="m-0 bi bi-person" viewBox="0 0 16 16">
+									<path
+										d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+								</svg>{{ friend.member_count }}</h3>
+						</div>
+						<div class="col p-0">
+							<h3 class="mr-5">
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="orange"
+									class="bi bi-layers" viewBox="0 0 16 16">
+									<path
+										d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0l3.515-1.874zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z" />
+								</svg>
+								{{ friend.postcount }}
+							</h3>
+						</div>
+						<div class="col p-0">
+							<h3>
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow"
+									class="bi bi-eye" viewBox="0 0 16 16">
+									<path
+										d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+									<path
+										d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+								</svg>
+								{{ friend.count_views }}
+							</h3>
+						</div>
+						<div class="col p-0">
+							<a href="{% url 'pot-category' friend.category %}"><button
+								class="ml-4 btn btn-Category btn-sm cmt_btn mx-1 my-1">{{friend.category}}</button></a>
+						</div>
+
+					</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+{% endblock content %}
+
+<!--if no results show something else-->
+<!--also use space where posts is to show pots, real pots-->

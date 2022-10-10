@@ -1,0 +1,230 @@
+{% extends "brewwerblog/base.html" %}
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div  class="content-section BlueOutlineCss">
+      <div class="row justify-content-center"> 
+          <div class="col">
+            <h4 class="text-center tab1">E x p l o r e</h4>
+            <h4 class="text-center tab1">{{cats}}</h4>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+<div class="col  infinite-container">
+  {% for post in category_pots %}
+  <div class="content-section infinite-item">
+    <div class="media mb-2">
+          <!-------Media Body------Media Body------Media Body-->
+          <!-------Media Body------Media Body------Media Body-->
+
+          <div class="media-body mr-2">
+            <div class="d-flex justify-content-center mb-4">
+              {% if post.header_image%}
+              <a href="{% url 'post-detail' post.id %}">
+                <img src="{{ post.header_image.url }}" class="img-fluid">
+
+              </a>
+              {%endif%}
+              </div> 
+          </div>
+      </div>
+      <div class="row">
+      <div class="col-1.5">
+        <div class="container mt-4">
+          <a href="{% url 'show_profile_page' post.author.id %}">
+            <img class= "rounded-circle article-img m-0 ml-1" src="{{ post.author.profile.image.url}}">
+          </a>
+        </div>
+         </div>
+      <div class="col mb-3 pr-3 ">
+        <a href="{%url 'category' post.category%}"><button class=" btn btn-Category btn-sm cmt_btn mx-1 my-1">{{post.category}}</button></a>
+
+        <a class="mr-2" href="{% url 'show_profile_page' post.author.id %}">@{{ post.author }}</a>
+            <small class="text-muted">{{ post.data_posted }}</small>
+            <a href="{% url 'post-detail' post.id %}"><h1 class="article-title mt-1 mb-3 pt-1"><br/>{{ post.title }}</h1></a>
+              <h2 class="article-content "></br>{{ post.snippet}}   </h2><p ><a  href="{% url 'post-detail' post.id%}">Continue Reading</a></p>
+
+              </div>
+      </div>
+      <div class="col">
+        <textarea class="form-control comment-text-{{post.id}} placeholder=" placeholder="Add a comment" ></textarea>
+        <div class="row mt-2">
+           <button type="button" data-answer="{{post.id}}" class="btn btn-button2 btn-sm save-comment"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="ml-3 mt-1 pt-1 bi bi-chat-square-quote" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+          </svg></button>
+        <button type="button" data-answer="{{post.id}}" class=" btn btn-button btn-sm cmt_btn "><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="ml-3 mt-1 bi bi-chat-dots" viewBox="0 0 16 16">
+          <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+        </svg></button>
+        <p class="comment-count-{{obj.id}}">{{post.comments.count}}</p>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="orange" class="ml-3 mt-1 bi bi-arrow-down-circle downvote-click" data-answer="{{post.id}}" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+        </svg>
+        <p class="downvote-count-{{post.id}}">{{post.downvote_set.count}}</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="lightgreen" class="upvote-click ml-3 mt-1 bi bi-arrow-up-circle" data-answer="{{post.id}}" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+        </svg>
+        <p class="upvote-count-{{post.id}}">{{post.upvote_set.count}}</p>
+
+        </div>
+       
+      </div>
+
+  <div class="mt-3 comment-wrapper-{{post.id}} comment-box-{{post.id}}">
+    {%if post.comments.all %}
+             {% for c in post.comments.all %}
+                    <div>
+
+                      <ul>
+                        <span>
+                        <strong class="text-info">{{ c.author }} </strong>
+                        <small class="text-muted">{{ c.date_posted }}</small>
+
+                        </span>
+                        <p>
+                        {{ c.comment}}
+                        </p>
+                      </ul>
+                    </div>
+                  {% endfor %}
+                  {% else %}
+                  <strong class="text-secondary">No comments yet by others yet...</strong>
+            {% endif %}                      
+              </div>
+        </div>
+
+    {% endfor %}
+</div>
+{%if page_obj.has_next %}
+  <a class= "infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+<!--<a class= "btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>-->
+{%endif%}
+{%else%}
+<div class="container">
+  <div class=" col justify-content-center align-self-center ">
+    <div class=" justify-content-center">
+  <a href="{% url 'brewwer-login'%}">
+    <button class="btn btn-outline-info btn-block">
+      <h1 class="account-heading">Login to continue</h1>
+    </button>
+  </a>
+   </div>
+  </div>
+</div>
+{%endif%}
+
+<script src="{% static 'brewwerblog/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'brewwerblog/infinite.min.js' %}"></script>
+
+<script>
+var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+
+    offset: 'bottom-in-view',
+    onBeforePageLoad: function(){
+
+    },
+    onAfterPageLoad:function(){
+
+    }
+
+})
+</script>
+<script src="{% static 'brewwerblog/jquery-3.6.0.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $(".save-comment").on('click',function(event){
+      var _answerid=$(this).data('answer');
+      var _comment=$(".comment-text-"+_answerid).val();
+
+      $.ajax({
+        url:"/save-comment",
+        type:"POST",
+        data:{
+          answerid:_answerid,
+          comment:_comment,
+          csrfmiddlewaretoken:"{{csrf_token}}"
+        },
+        dataType:'json',
+        beforeSend:function(){
+          $(".save-comment").addClass('disabled').text('...saving');
+        },
+        success:function(res){
+          if(res.bool==true && !(_comment==="") ){
+            $(".comment-text-"+_answerid).val('');
+            var _html='<div>\
+                          <ul>\
+                            <span>\
+                            <strong class="text-info">{{ request.user }} </strong>\
+                            <smal class="text-muted">{% now "jS F Y H:i" %} </small>\
+                            </span>\
+                            <p>'+_comment+'</p>\
+                            </ul>\
+                        </div>';
+                  $(".comment-wrapper-"+_answerid).prepend(_html);
+          }else{}
+          $(".save-comment").removeClass('disabled').text('Submit');
+        }
+      });
+      console.log(_comment,_answerid);
+    });
+    $(".upvote-click").on('click',function(){
+      var answerid=$(this).data('answer');
+      console.log(answerid);   
+      $.ajax({
+        url:"/save-upvote",
+        type:"POST",
+        data:{
+          answerid:answerid,
+          csrfmiddlewaretoken:"{{csrf_token}}"
+        },
+        dataType:'json',
+        success:function(res){
+          console.log(res)
+          var _prevupvote=$(".upvote-count-"+answerid).text();
+          if(res.bool==true){
+            $(".upvote-count-"+answerid).text(parseInt(_prevupvote)+1);
+          }
+        }
+      });
+    });
+    $(".downvote-click").on('click',function(){
+            var answerid=$(this).data('answer');
+            // Ajax
+            $.ajax({
+                url:"/save-downvote",
+                type:"post",
+                data:{
+                    answerid:answerid,
+                    csrfmiddlewaretoken:"{{csrf_token}}"
+                },
+                dataType:'json',
+                success:function(res){
+                    var _prevupvote=$(".downvote-count-"+answerid).text();
+                    if(res.bool==true){
+                        $(".downvote-count-"+answerid).text(parseInt(_prevupvote)+1);
+                    }
+                }
+            });
+        });
+    let display = false
+    $(".cmt_btn").click(function () {
+      var _buttonid=$(this).data('answer');
+        if (display===false) {
+            $(".comment-box-"+_buttonid).show("fast");
+            display=true
+        } else {
+            $(".comment-box-"+_buttonid).hide("fast");
+            display=false
+        }  
+    });
+  });
+</script>
+
+{% endblock content %}
