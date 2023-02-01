@@ -1,4 +1,4 @@
-from brewwerconnections.models import FriendRequest
+from Connections.models import FriendRequest
 
 def get_friend_request_or_false(sender,receiver):
     try:

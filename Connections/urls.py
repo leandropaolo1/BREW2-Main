@@ -1,6 +1,6 @@
 from django.urls import path
 
-from brewwerconnections.views import(
+from Connections.views import(
     send_friend_request,
     friend_requests,
     accept_friend_request,
