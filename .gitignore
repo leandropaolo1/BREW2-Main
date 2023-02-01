@@ -1,5 +1,12 @@
 _brewwer-4-VENV
 /_brewwer-4-VENV
+/_brew
+Accounts/migration/__pycache__/
+Connections/migrations/__pycache__/
+Pipes/migrations/__pycache__/
+PipesPost/migrations/__pycache__/
+PipesProfile/migrations/__pycache__/
+
 /Accounts/__pycache__
 Accounts/__pycache__
 /Connections/__pycache__
@@ -12,3 +19,4 @@ PipesPost/__pycache__
 PipesProfile/__pycache__
 /core/__pycache__
 core/__pycache__
+db.sqlite3
