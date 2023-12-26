@@ -1,59 +1,142 @@
+from Accounts.models import AccountModel
 from django.db import models
-from django.conf import settings
-from django.db.models.deletion import CASCADE
-from django.contrib.auth.mixins import LoginRequiredMixin
+import uuid
 
-class FriendList(models.Model,LoginRequiredMixin):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="user")
-    friends = models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True, related_name="friends")
-    
+
+class FriendListModel(models.Model):
+    id = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=True,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    public_uuid = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=False,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    private_uuid = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=False,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    account_relation = models.ForeignKey(
+        AccountModel,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False)
+
+    account_relations = models.ManyToManyField(
+        AccountModel)
+
+    date_created = models.DateTimeField(
+        auto_now_add=True,
+        editable=False)
+
+    date_updated = models.DateTimeField(
+        auto_now=True)
+
     def __str__(self):
-        return self.user.username
-    
-    def add_friend(self, account):
-        if not account in self.friends.all():
-            self.friends.add(account)
+        return self.account_relation.username
+
+    def addAccount(self, account_instance: AccountModel):
+        if not account_instance in self.account_relations.all():
+            self.account_relations.add(account_instance)
             self.save()
 
-    def remove_friend(self,account):
-        if account in self.friends.all():
-            self.friends.remove(account)
+    def removeAccount(self, account_instance: AccountModel):
+        if account_instance in self.account_relations.all():
+            self.account_relations.remove(account_instance)
 
-    def unfriend(self,removee):
-        remover_friends_list =self
-        remover_friends_list.remove_friend(removee)
-        friends_list = FriendList.objects.get(user=removee)
-        friends_list.remove_friend(self.user)
-        #error might occur friends_list.remove_frine
-
-    def is_mutual_friend(self, friend):
-        if friend in self.friends.all():
+    def findAccount(self, account_instance: AccountModel):
+        if account_instance in self.account_relations.all():
             return True
         return False
 
-class FriendRequest(models.Model,LoginRequiredMixin):
-    sender= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=CASCADE,related_name="sender")
-    receiver=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=CASCADE,related_name="receiver")
 
-    is_active = models.BooleanField(blank=True,null=False,default=True)
-    timestamp=models.DateTimeField(auto_now_add=True)
+class FriendRequestModel(models.Model):
+    id = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=True,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    public_uuid = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=False,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    private_uuid = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=False,
+        max_length=255,
+        editable=False,
+        unique=True,
+        blank=False,
+        null=False)
+
+    sender_relation = models.ForeignKey(
+        AccountModel,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False)
+
+    receiver_relation = models.ForeignKey(
+        AccountModel,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False)
+
+    is_active = models.BooleanField(
+        default=True,
+        blank=False,
+        null=False)
+
+    date_created = models.DateTimeField(
+        auto_now_add=True,
+        editable=False)
+
+    date_updated = models.DateTimeField(
+        auto_now=True)
 
     def __str__(self):
-        return self.sender.username
+        return self.sender_relation.username
 
     def accept(self):
-        receiver_friend_list = FriendList.objects.get(user=self.receiver)
-        if receiver_friend_list:
-            receiver_friend_list.add_friend(self.sender)
-            sender_friend_list = FriendList.objects.get(user=self.sender)
-            if sender_friend_list:
-                sender_friend_list.add_friend(self.receiver)
-                self.is_active = False
-                self.save()
+        try:
+            receiver_friend_list = FriendListModel.objects.get(
+                account_reltion=self.receiver_relation)
+            receiver_friend_list.addAccount(self.sender_relation)
+            sender_friend_list = FriendListModel.objects.get(
+                account_relation=self.sender_relation)
+            sender_friend_list.addAccount(self.receiver_relation)
+            self.is_active = False
+            self.save()
+        except:
+            pass
+
     def decline(self):
         self.is_active = False
         self.save()
 
     def cancel(self):
-        self.is_active=False
+        self.is_active = False
         self.save()

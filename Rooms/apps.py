@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PipesPostConfig(AppConfig):
+class RoomsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'PipesPost'
+    name = 'Rooms'

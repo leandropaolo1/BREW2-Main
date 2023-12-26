@@ -6,7 +6,10 @@ Connections/migrations/__pycache__/
 Pipes/migrations/__pycache__/
 PipesPost/migrations/__pycache__/
 PipesProfile/migrations/__pycache__/
-
+_brew
+*__pycache__/
+*__pycache__
+*.pyc
 /Accounts/__pycache__
 Accounts/__pycache__
 /Connections/__pycache__

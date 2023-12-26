@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PipesProfileConfig(AppConfig):
+class SingletonsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'PipesProfile'
+    name = 'Singletons'

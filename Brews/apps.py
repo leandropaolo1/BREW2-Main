@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PipesConfig(AppConfig):
+class BrewsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Pipes'
+    name = 'Brews'
