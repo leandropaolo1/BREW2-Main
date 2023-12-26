@@ -23,3 +23,4 @@ PipesProfile/__pycache__
 /core/__pycache__
 core/__pycache__
 db.sqlite3
+core/brew.env

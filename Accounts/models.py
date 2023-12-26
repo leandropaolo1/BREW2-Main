@@ -143,8 +143,9 @@ class AccountModel(AbstractBaseUser, PermissionsMixin, AccountModelMixin):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name_plural = "Accounts"
-        verbose_name = "Account"
+        verbose_name_plural = "Account Models"
+        verbose_name = "Account Model"
+        ordering = ['-date_created']
 
     def __str__(self):
         return self.username

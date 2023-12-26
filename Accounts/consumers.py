@@ -11,9 +11,9 @@ class AccountsConsumer1(AsyncWebsocketConsumer):
 
     async def connect(self):
         if self.scope["user"] is None or self.scope["user"].is_anonymous:
-            print("User is not authenticated")
             await self.close()
             return
+        
         await self.channel_layer.group_add(
             "applications1_group", self.channel_name)
         await self.accept()
